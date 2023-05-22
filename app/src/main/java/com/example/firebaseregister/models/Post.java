@@ -5,6 +5,8 @@ public class Post {
     private String title;
     private String contents;
 
+    private String date;
+
     public Post() {
     }
 
@@ -13,7 +15,13 @@ public class Post {
         this.title = title;
         this.contents = contents;
     }
+    public void setDate(String date) {
+        this.date = date;
+    }
 
+    public String getDate() {
+        return date;
+    }
     public String getDocumentId() {
         return documentId;
     }

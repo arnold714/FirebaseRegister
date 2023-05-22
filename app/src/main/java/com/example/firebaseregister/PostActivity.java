@@ -14,7 +14,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
     private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
@@ -23,6 +25,8 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
     ArrayList<String> postKey = null;
     ArrayList<String> postvalue = null;
+
+
 
 
     String uid;
@@ -53,10 +57,20 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
             Toast.makeText(this, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
             return;
         }
+    //날짜 포맷
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd");
+        SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+
+        Date time = new Date();
+
+        String today = dateFormat.format(time);
+        String order_today = dateFormat2.format(time);
+
 
         Post post = new Post();
         post.setTitle(mTitle.getText().toString());
         post.setContents(mContents.getText().toString());
+        post.setDate(today);
         post.setDocumentId(uid);
         mDatabaseRef.child("post").child(uid).push().setValue(post);
         finish();

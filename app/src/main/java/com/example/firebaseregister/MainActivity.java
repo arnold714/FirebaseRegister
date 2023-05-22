@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Post post = snapshot.getValue(Post.class);
-                    listAdapter.addItem(post.getTitle(), post.getContents());
+                    listAdapter.addItem(post.getTitle(), post.getContents(),post.getDate());
 
                 }
             }

@@ -48,12 +48,15 @@ public class ListAdapter extends BaseAdapter {
         // 불러오는 view 의 객체로 id를 주입함
         TextView tv_title = (TextView) convertView.findViewById(R.id.item_post_title);
         TextView tv_contents = (TextView) convertView.findViewById(R.id.item_post_contents);
+        TextView tv_date = (TextView) convertView.findViewById(R.id.item_post_date);
 
         Post post = postArrayList.get(position); // 아래 addItem 에서 넣은 값을 다시 board에 넣는 방식을 취함
 
         // 그 값을 세팅을 함
         tv_title.setText(post.getTitle());
         tv_contents.setText(post.getContents());
+        tv_date.setText(post.getDate());
+
 
 
 
@@ -61,11 +64,12 @@ public class ListAdapter extends BaseAdapter {
     }
 
     //아이템 데이터 추가를 위한 함수, 개발자가 원하는대로 작성 가능.
-    public void addItem(String title,String contents) {
+    public void addItem(String title,String contents,String date) {
         Post item = new Post();
 
         item.setTitle(title);
         item.setContents(contents);
+        item.setDate(date);
 
         postArrayList.add(item);
     }
