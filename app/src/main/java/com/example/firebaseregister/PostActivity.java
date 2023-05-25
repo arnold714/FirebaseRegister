@@ -34,7 +34,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post);
+        setContentView(R.layout.employer_activity_post);
 
         FirebaseUser user = mAuth.getCurrentUser();
         uid = user.getUid();

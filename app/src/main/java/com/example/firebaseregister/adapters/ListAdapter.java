@@ -42,7 +42,7 @@ public class ListAdapter extends BaseAdapter {
 
         if (convertView == null) { // 이때 다른 xml 에서불러오는 view 의 객체값이 존재하지 않는다면 .. 최초 한번 실행
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.item_post, parent, false); // 다른 xml 에 있는 view객체를 가지고 올것임
+            convertView = inflater.inflate(R.layout.employer_item_post, parent, false); // 다른 xml 에 있는 view객체를 가지고 올것임
         }
 
         // 불러오는 view 의 객체로 id를 주입함

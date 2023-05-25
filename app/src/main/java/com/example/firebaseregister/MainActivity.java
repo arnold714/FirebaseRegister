@@ -1,88 +1,52 @@
 package com.example.firebaseregister;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
+import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.firebaseregister.adapters.ListAdapter;
-import com.example.firebaseregister.models.Post;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private FirebaseAuth mAuth= FirebaseAuth.getInstance();
-    private DatabaseReference mDatabaseRef = FirebaseDatabase.getInstance().getReference();
-    private ListView mListView;
-    ListAdapter listAdapter = null;
-    String uid;
 
+public class MainActivity extends AppCompatActivity{
+
+
+    EmpHomeFragment emphomeFragment;
+    EmpAlarmFragment empalarmFragment;
+    EmpMypageFragment empmypageFragment;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.employer_activity_list);
 
-        mListView = (ListView) findViewById(R.id.main_listview);
-        listAdapter = new ListAdapter();
-        getBoard();
-        findViewById(R.id.main_post_edit).setOnClickListener(this);
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
 
-    @Override
-    public void onClick(View v) {
-        startActivity(new Intent(this, PostActivity.class));
-    }
-    public void getBoard() {
-        FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        uid = firebaseUser.getUid();
-        mDatabaseRef.child("post").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Map<String, String> map = (Map) dataSnapshot.getValue();
-                mListView.setAdapter(listAdapter);
+            emphomeFragment = new EmpHomeFragment();
+            empalarmFragment = new EmpAlarmFragment();
+            empmypageFragment = new EmpMypageFragment();
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Post post = snapshot.getValue(Post.class);
-                    listAdapter.addItem(post.getTitle(), post.getContents(),post.getDate());
+        getSupportFragmentManager().beginTransaction().replace(R.id.containers, emphomeFragment).commit();
 
+        NavigationBarView navigationBarView = findViewById(R.id.bottom_employer_navigationview);
+        navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()) {
+                        case R.id.employer_home:
+                            getSupportFragmentManager().beginTransaction().replace(R.id.containers, emphomeFragment).commit();
+                            return true;
+                        case R.id.employer_alarm: getSupportFragmentManager().beginTransaction().replace(R.id.containers, empalarmFragment).commit();
+                            return true;
+                        case R.id.employer_mypage:
+                            getSupportFragmentManager().beginTransaction().replace(R.id.containers, empmypageFragment).commit();
+                            return true;
+                    }
+                    return false;
                 }
-            }
+            });
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 }
